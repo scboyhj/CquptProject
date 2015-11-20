@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <include layout="@layout/actionbarlay" />
+
+        <Button
+            android:id="@+id/bt_send_data"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="提交"
+            android:textColor="@color/white"
+            android:textSize="6pt" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:background="#00C5CD"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="重庆邮电大学理论教学听课记录表"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="2015学年第二学期"
+            android:textColor="@color/black"
+            android:textSize="4pt" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <RadioGroup
+            android:id="@+id/radiogroup_evalue"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/radio_bt1"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="#1874CD"
+                android:button="@null"
+                android:gravity="center"
+                android:text="基本信息"
+                android:textColor="@color/white" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:background="#2F4F4F" />
+
+            <RadioButton
+                android:id="@+id/radio_bt2"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="#1874CD"
+                android:button="@null"
+                android:gravity="center"
+                android:text="评价内容"
+                android:textColor="@color/white" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:background="#2F4F4F" />
+
+            <RadioButton
+                android:id="@+id/radio_bt3"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="#1874CD"
+                android:button="@null"
+                android:gravity="center"
+                android:text="课堂记事"
+                android:textColor="@color/white" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:background="#2F4F4F" />
+
+            <RadioButton
+                android:id="@+id/radio_bt4"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="#1874CD"
+                android:button="@null"
+                android:gravity="center"
+                android:text="意见建议"
+                android:textColor="@color/white" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/buttom_line"
+        android:layout_width="fill_parent"
+        android:layout_height="6dp"
+        android:background="#2F4F4F" >
+    </FrameLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_evaluation"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

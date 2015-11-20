@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">重邮督导在线</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="evaluation_content_1">教学态度(15分)：备课认真，准备充分；仪态大方，为人师表，精神饱满。</string>
+    <string name="evaluation_content_2">教学内容(25分)：教学目的明确，内容充实完整，科学合理；讲授熟练，分析论证充分，重点难点突出，理论联系实际，体现科学发展前沿。</string>
+    <string name="evaluation_content_3">教学方法与手段(25分)：注重启发诱导；有多媒体设备的教室能做到电子教案与板书交互并用；语言清晰，语速适中；电子教案适用、美观；板书设计合理，书写清楚。</string>
+    <string name="evaluation_content_4">课堂管理(10分)：严格执行学校课堂管理规定，课堂纪律好。</string>
+    <string name="evaluation_content_5">教学效果(25分)：课堂气氛活跃，师生互动效果明显；通过课程学习能提高自主学习与创新能力；教师授课有特点，讲授能吸引学生，能有效提高学生的学习兴趣。</string>
+
+</resources>
