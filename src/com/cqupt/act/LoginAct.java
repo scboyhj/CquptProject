@@ -75,7 +75,7 @@ public class LoginAct extends BaseAct {
 				startActivity(new Intent(LoginAct.this, MainAct.class));
 
 			}
-		}, 2000);
+		}, 500);
 
 		// httpConnectUtils.sendRequestByGet(REQUST_TYPE.LOGIN, params,
 		// new HttpListener() {

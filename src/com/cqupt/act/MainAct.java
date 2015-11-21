@@ -64,6 +64,14 @@ public class MainAct extends BaseAct {
 	@OnClick(R.id.main_bt1)
 	public void bt1(View v) {
 		startActivity(new Intent(MainAct.this, EvaluationAct.class));
+
+	}
+
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+
 	}
 
 	private void startTurns() {
@@ -93,6 +101,7 @@ public class MainAct extends BaseAct {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+
 		timer.cancel();
 	}
 

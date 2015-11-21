@@ -93,16 +93,30 @@ public class EvaluationAct extends BaseAct {
 
 	@OnClick(R.id.bt_send_data)
 	public void sendData(View v) {
-		String str = ((BaseFrag) fragments.get(0)).collectDataInView();
+		String str1 = ((BaseFrag) fragments.get(0)).collectDataInView();
 
-		if (str == null) {
-			CustomViewUtils.showInToast(customApplication, "上传成功");
-		}else{
-			CustomViewUtils.showInToast(customApplication, str);
+		String str2 = ((BaseFrag) fragments.get(1)).collectDataInView();
+
+		String str3 = ((BaseFrag) fragments.get(2)).collectDataInView();
+
+		String[] strs = new String[] { str1, str2, str3 };
+
+		boolean isComplement = true;
+
+		for (int i = 0; i < strs.length; i++) {
+			String st = strs[i];
+			if (st == null) {
+				((BaseFrag) fragments.get(i)).showSaveInMapsData();
+			} else {
+				CustomViewUtils.showInToast(customApplication, st);
+				isComplement = false;
+				break;
+			}
 		}
-		Log.i("result",
-				"lesson_name is:"
-						+ BaseFrag.listHashMaps.get(0).get("lesson_name"));
+		if (isComplement) {
+			CustomViewUtils.showInToast(customApplication, "上传成功");
+			((BaseFrag) fragments.get(0)).showSaveInMapsData();
+		}
 
 	}
 

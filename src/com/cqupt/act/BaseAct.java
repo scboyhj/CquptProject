@@ -13,5 +13,6 @@ public class BaseAct extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		customApplication = (CustomApplication) getApplicationContext();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+           
 	}
 }
