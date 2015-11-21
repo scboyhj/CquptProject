@@ -99,14 +99,16 @@ public class EvaluationAct extends BaseAct {
 
 		String str3 = ((BaseFrag) fragments.get(2)).collectDataInView();
 
-		String[] strs = new String[] { str1, str2, str3 };
+		String str4 = ((BaseFrag) fragments.get(3)).collectDataInView();
+
+		String[] strs = new String[] { str1, str2, str3, str4 };
 
 		boolean isComplement = true;
 
 		for (int i = 0; i < strs.length; i++) {
 			String st = strs[i];
 			if (st == null) {
-				((BaseFrag) fragments.get(i)).showSaveInMapsData();
+			//((BaseFrag) fragments.get(i)).showSaveInMapsData();
 			} else {
 				CustomViewUtils.showInToast(customApplication, st);
 				isComplement = false;

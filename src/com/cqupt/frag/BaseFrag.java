@@ -76,6 +76,14 @@ public class BaseFrag extends Fragment implements CollectDataInViewListener {
 
 		listHashMaps.add(recordInClassHashMap);
 
+		LinkedHashMap<String, String> adviceInClassHashMap = new LinkedHashMap<String, String>();
+
+		adviceInClassHashMap.put("my_advice", null);
+		adviceInClassHashMap.put("my_name", null);
+		adviceInClassHashMap.put("listen_time", null);
+
+		listHashMaps.add(adviceInClassHashMap);
+
 	}
 
 	public boolean checkAllMaps() {
