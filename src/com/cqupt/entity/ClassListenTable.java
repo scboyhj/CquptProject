@@ -32,4 +32,24 @@ public class ClassListenTable {
 	public String my_name = null;
 	public String listen_time = null;
 
+	@Override
+	public String toString() {
+		return "ClassListenTable [lesson_belong=" + lesson_belong
+				+ ", student_belong=" + student_belong + ", lesson_property="
+				+ lesson_property + ", lesson_name=" + lesson_name
+				+ ", room_num=" + room_num + ", class_num=" + class_num
+				+ ", class_content=" + class_content + ", class_time="
+				+ class_time + ", score_attitude=" + score_attitude
+				+ ", score_content=" + score_content + ", score_method="
+				+ score_method + ", score_manage=" + score_manage
+				+ ", score_result=" + score_result + ", is_late=" + is_late
+				+ ", is_advance=" + is_advance + ", book_hold=" + book_hold
+				+ ", should_be=" + should_be + ", fact_be=" + fact_be
+				+ ", late_num=" + late_num + ", late_rate=" + late_rate
+				+ ", comeout_rate=" + comeout_rate + ", class_condition="
+				+ class_condition + ", state_score=" + state_score
+				+ ", my_advice=" + my_advice + ", my_name=" + my_name
+				+ ", listen_time=" + listen_time + "]";
+	}
+
 }

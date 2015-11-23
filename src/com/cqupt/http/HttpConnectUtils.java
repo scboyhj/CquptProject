@@ -1,6 +1,9 @@
 package com.cqupt.http;
 
+import java.util.List;
 import java.util.Map;
+
+import org.apache.http.NameValuePair;
 
 import android.os.Handler;
 import android.test.AndroidTestCase;
@@ -34,7 +37,16 @@ public class HttpConnectUtils extends AndroidTestCase {
 		}
 		urlString = urlString.substring(0, urlString.length() - 1);
 		Log.i("urlString", urlString);
-		customHttpUtils.sendRequestServer(urlString, httpListener);
+		customHttpUtils.sendRequestServerByGet(urlString, httpListener);
 
+	}
+
+	public void sendRequestByPost(REQUST_TYPE type, HttpListener httpListener,
+			List<NameValuePair> nameValuePairs) {
+		String urlString = HttpSettings.getURLByType(type);
+
+		Log.i("urlString", urlString);
+		customHttpUtils.sendRequestServerByPost(urlString, httpListener,
+				nameValuePairs);
 	}
 }

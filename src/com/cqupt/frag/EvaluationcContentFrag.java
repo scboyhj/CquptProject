@@ -26,7 +26,6 @@ public class EvaluationcContentFrag extends BaseFrag {
 	EditText manageEditText;
 	@ViewInject(R.id.et_content_result)
 	EditText resultEditText;
-	LinkedHashMap<String, String> linkedHashMap;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -38,8 +37,6 @@ public class EvaluationcContentFrag extends BaseFrag {
 
 		ViewUtils.inject(this, viewGroup);
 
-		linkedHashMap = listHashMaps.get(1);
-
 		return viewGroup;
 	}
 
@@ -47,32 +44,36 @@ public class EvaluationcContentFrag extends BaseFrag {
 	public String collectDataInView() {
 		// TODO Auto-generated method stub
 		if (!TextUtils.isEmpty(attitudeEditText.getText().toString())) {
-			linkedHashMap.put("score_attitude", attitudeEditText.getText()
-					.toString());
+
+			classListenTable.score_attitude = attitudeEditText.getText()
+					.toString();
+
 		} else {
 			return "教学态度未评";
 		}
 		if (!TextUtils.isEmpty(contentEditText.getText().toString())) {
-			linkedHashMap.put("score_content", contentEditText.getText()
-					.toString());
+
+			classListenTable.score_content = contentEditText.getText()
+					.toString();
 		} else {
 			return "教内容未评";
 		}
 		if (!TextUtils.isEmpty(methodEditText.getText().toString())) {
-			linkedHashMap.put("score_method", methodEditText.getText()
-					.toString());
+
+			classListenTable.score_method = methodEditText.getText().toString();
+
 		} else {
 			return "教学方法未评";
 		}
 		if (!TextUtils.isEmpty(manageEditText.getText().toString())) {
-			linkedHashMap.put("score_manage", manageEditText.getText()
-					.toString());
+
+			classListenTable.score_manage = manageEditText.getText().toString();
 		} else {
 			return "教学管理未评";
 		}
 		if (!TextUtils.isEmpty(resultEditText.getText().toString())) {
-			linkedHashMap.put("score_result", resultEditText.getText()
-					.toString());
+
+			classListenTable.score_result = resultEditText.getText().toString();
 		} else {
 			return "教学效果未评";
 		}

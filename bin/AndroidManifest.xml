@@ -27,6 +27,8 @@
         </activity>
         <activity android:name="com.cqupt.act.EvaluationAct" >
         </activity>
+        <activity android:name="com.cqupt.act.RecordAct" >
+        </activity>
 
         <uses-library android:name="android.test.runner" />
     </application>

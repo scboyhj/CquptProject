@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import android.os.Bundle;
+import android.os.Parcelable.ClassLoaderCreator;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cqupt.act.R;
+import com.cqupt.entity.ClassListenTable;
 import com.cqupt.setting.SchoolSetting;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -43,7 +45,6 @@ public class BasicInfoFrag extends BaseFrag {
 	@ViewInject(R.id.spinner_kind_of_course)
 	Spinner spinnerKindOfCourse;
 	ViewGroup viewGroup;
-	LinkedHashMap<String, String> linkedHashMap;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -54,7 +55,7 @@ public class BasicInfoFrag extends BaseFrag {
 				R.layout.frag_basic_infolay, null);
 
 		ViewUtils.inject(this, viewGroup);
-		linkedHashMap = listHashMaps.get(0);
+
 		initSpinnerCourseBelong();
 		initSpinnerStudentBelong();
 		initSpinnerKindOfCourse();
@@ -68,7 +69,8 @@ public class BasicInfoFrag extends BaseFrag {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
 				"yyyy-MM-dd HH:mm:ss");
 		lessonTimeTextView.setText(dateFormat.format(date));
-		linkedHashMap.put("class_time", dateFormat.format(date));
+
+		classListenTable.class_time = dateFormat.format(date);
 
 	}
 
@@ -90,8 +92,8 @@ public class BasicInfoFrag extends BaseFrag {
 					public void onItemSelected(AdapterView<?> parent,
 							View view, int position, long id) {
 						// TODO Auto-generated method stub
-						linkedHashMap.put("student_belong",
-								strings.get(position));
+
+						classListenTable.student_belong = strings.get(position);
 					}
 
 					@Override
@@ -122,9 +124,9 @@ public class BasicInfoFrag extends BaseFrag {
 					@Override
 					public void onItemSelected(AdapterView<?> parent,
 							View view, int position, long id) {
-						// TODO Auto-generated method stub
-						linkedHashMap.put("lesson_property",
-								strings.get(position));
+
+						classListenTable.lesson_property = strings
+								.get(position);
 					}
 
 					@Override
@@ -156,8 +158,8 @@ public class BasicInfoFrag extends BaseFrag {
 					public void onItemSelected(AdapterView<?> parent,
 							View view, int position, long id) {
 						// TODO Auto-generated method stub
-						linkedHashMap.put("lesson_belong",
-								strings.get(position));
+
+						classListenTable.lesson_belong = strings.get(position);
 					}
 
 					@Override
@@ -174,26 +176,30 @@ public class BasicInfoFrag extends BaseFrag {
 		// TODO Auto-generated method stub
 
 		if (!TextUtils.isEmpty(lessonNameEditText.getText().toString())) {
-			linkedHashMap.put("lesson_name", lessonNameEditText.getText()
-					.toString());
+
+			classListenTable.lesson_name = lessonNameEditText.getText()
+					.toString();
 		} else {
 			return "øŒ≥Ã√˚≥∆Œ¥ÃÓ";
 		}
 		if (!TextUtils.isEmpty(lessonRoomNumEditText.getText().toString())) {
-			linkedHashMap.put("room_num", lessonRoomNumEditText.getText()
-					.toString());
+
+			classListenTable.room_num = lessonRoomNumEditText.getText()
+					.toString();
 		} else {
 			return "ΩÃ “±‡∫≈Œ¥ÃÓ";
 		}
 		if (!TextUtils.isEmpty(lessonClassNumEditText.getText().toString())) {
-			linkedHashMap.put("class_num", lessonClassNumEditText.getText()
-					.toString());
+
+			classListenTable.class_num = lessonClassNumEditText.getText()
+					.toString();
 		} else {
 			return "∞‡º∂±‡∫≈Œ¥ÃÓ";
 		}
 		if (!TextUtils.isEmpty(lessonContentEditText.getText().toString())) {
-			linkedHashMap.put("class_content", lessonContentEditText.getText()
-					.toString());
+
+			classListenTable.class_content = lessonContentEditText.getText()
+					.toString();
 		} else {
 			return "Ω≤øŒƒ⁄»›Œ¥ÃÓ";
 		}

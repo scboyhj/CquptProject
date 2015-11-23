@@ -26,7 +26,6 @@ public class AdviceInClassFrag extends BaseFrag {
 	EditText nameEditText;
 	@ViewInject(R.id.tv_listen_time)
 	TextView timeTextView;
-	LinkedHashMap<String, String> linkedHashMap;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -37,7 +36,7 @@ public class AdviceInClassFrag extends BaseFrag {
 				R.layout.fag_advice_lay, null);
 
 		ViewUtils.inject(this, viewGroup);
-		linkedHashMap = listHashMaps.get(3);
+
 		initTime();
 		return viewGroup;
 	}
@@ -48,19 +47,23 @@ public class AdviceInClassFrag extends BaseFrag {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yy-mm-dd hh:mm:ss");
 		String timeString = dateFormat.format(date).toString();
 		timeTextView.setText(timeString);
-		linkedHashMap.put("listen_time", timeString);
+
+		classListenTable.listen_time = timeString;
+
 	}
 
 	@Override
 	public String collectDataInView() {
 		// TODO Auto-generated method stub
 		if (!TextUtils.isEmpty(adviceEditText.getText().toString())) {
-			linkedHashMap.put("my_advice", adviceEditText.getText().toString());
+
+			classListenTable.my_advice = adviceEditText.getText().toString();
 		} else {
 			return "你的意见未填";
 		}
 		if (!TextUtils.isEmpty(nameEditText.getText().toString())) {
-			linkedHashMap.put("my_name", nameEditText.getText().toString());
+
+			classListenTable.my_name = nameEditText.getText().toString();
 		} else {
 			return "你的名字未填";
 		}

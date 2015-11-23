@@ -3,6 +3,9 @@ package com.cqupt.act;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +28,8 @@ import com.cqupt.frag.BaseFrag;
 import com.cqupt.frag.BasicInfoFrag;
 import com.cqupt.frag.EvaluationcContentFrag;
 import com.cqupt.frag.RecordInClassFrag;
+import com.cqupt.http.HttpConnectUtils.HttpListener;
+import com.cqupt.setting.HttpSettings.REQUST_TYPE;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -108,7 +113,7 @@ public class EvaluationAct extends BaseAct {
 		for (int i = 0; i < strs.length; i++) {
 			String st = strs[i];
 			if (st == null) {
-			//((BaseFrag) fragments.get(i)).showSaveInMapsData();
+				// ((BaseFrag) fragments.get(i)).showSaveInMapsData();
 			} else {
 				CustomViewUtils.showInToast(customApplication, st);
 				isComplement = false;
@@ -119,6 +124,25 @@ public class EvaluationAct extends BaseAct {
 			CustomViewUtils.showInToast(customApplication, "上传成功");
 			((BaseFrag) fragments.get(0)).showSaveInMapsData();
 		}
+//		String data = "";
+//		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+//		nameValuePairs.add(new BasicNameValuePair("data", data));
+//
+//		customApplication.httpConnectUtils.sendRequestByPost(
+//				REQUST_TYPE.SEND_TABLE, new HttpListener() {
+//
+//					@Override
+//					public void setResponseResult(String resultString) {
+//						// TODO Auto-generated method stub
+//						if (resultString.equals("ok")) {
+//
+//						} else if (resultString.equals("no")) {
+//
+//						} else {
+//
+//						}
+//					}
+//				}, nameValuePairs);
 
 	}
 

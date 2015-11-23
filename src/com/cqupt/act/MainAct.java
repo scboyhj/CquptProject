@@ -67,6 +67,12 @@ public class MainAct extends BaseAct {
 
 	}
 
+	@OnClick(R.id.main_bt2)
+	public void bt2(View v) {
+		startActivity(new Intent(MainAct.this, RecordAct.class));
+
+	}
+
 	@Override
 	protected void onRestart() {
 		// TODO Auto-generated method stub

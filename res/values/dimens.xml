@@ -6,12 +6,24 @@
     <dimen name="login_title_textsize">12pt</dimen>
     <dimen name="main_title_textsize">20pt</dimen>
     <dimen name="main_frag_nomal_textsize">8pt</dimen>
-    
     <dimen name="actionbar_textsize">8pt</dimen>
 
     <color name="divide_grey_color">#242424</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+    <color name="yellow">#FFFF00</color>
     <color name="red">#ff0000</color>
+    <color name="record_text1">#EE2C2C</color>
+
+    <dimen name="indicator_right_padding">10dp</dimen>
+    <dimen name="indicator_corner_radius">12dp</dimen>
+    <dimen name="indicator_internal_padding">4dp</dimen>
+    <dimen name="header_footer_left_right_padding">24dp</dimen>
+    <dimen name="header_footer_top_bottom_padding">12dp</dimen>
+    <dimen name="slidingmenu_offset">130dp</dimen>
+    <dimen name="list_padding">10dp</dimen>
+    <dimen name="shadow_width">15dp</dimen>
+
+    <integer name="num_cols">1</integer>
 
 </resources>

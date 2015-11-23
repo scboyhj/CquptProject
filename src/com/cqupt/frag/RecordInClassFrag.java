@@ -48,8 +48,6 @@ public class RecordInClassFrag extends BaseFrag {
 	@ViewInject(R.id.et_state_score)
 	EditText stateScoreEditText;
 
-	LinkedHashMap<String, String> linkedHashMap;
-
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,7 +57,7 @@ public class RecordInClassFrag extends BaseFrag {
 				R.layout.frag_record_lay, null);
 
 		ViewUtils.inject(this, viewGroup);
-		linkedHashMap = listHashMaps.get(2);
+
 		initRadioGroup();
 		return viewGroup;
 	}
@@ -72,9 +70,12 @@ public class RecordInClassFrag extends BaseFrag {
 					@Override
 					public void onCheckedChanged(RadioGroup group, int checkedId) {
 						if (checkedId == R.id.rb_late_no) {
-							linkedHashMap.put("is_late", "no");
+
+							classListenTable.is_late = "no";
+
 						} else if (checkedId == R.id.rb_late_yes) {
-							linkedHashMap.put("is_late", "yes");
+
+							classListenTable.is_late = "yes";
 						}
 
 					}
@@ -85,9 +86,9 @@ public class RecordInClassFrag extends BaseFrag {
 					@Override
 					public void onCheckedChanged(RadioGroup group, int checkedId) {
 						if (checkedId == R.id.rb_advance_no) {
-							linkedHashMap.put("is_advance", "no");
+							classListenTable.is_advance = "no";
 						} else if (checkedId == R.id.rb_advance_yes) {
-							linkedHashMap.put("is_advance", "yes");
+							classListenTable.is_advance = "yes";
 						}
 
 					}
@@ -98,11 +99,14 @@ public class RecordInClassFrag extends BaseFrag {
 					@Override
 					public void onCheckedChanged(RadioGroup group, int checkedId) {
 						if (checkedId == R.id.rb_quality_high) {
-							linkedHashMap.put("book_hold", "high");
+
+							classListenTable.book_hold = "high";
 						} else if (checkedId == R.id.rb_quality_middle) {
-							linkedHashMap.put("book_hold", "middle");
+
+							classListenTable.book_hold = "middle";
 						} else if (checkedId == R.id.rb_quality_low) {
-							linkedHashMap.put("book_hold", "low");
+
+							classListenTable.book_hold = "low";
 						}
 
 					}
@@ -125,43 +129,51 @@ public class RecordInClassFrag extends BaseFrag {
 		}
 
 		if (!TextUtils.isEmpty(shouldBeNumEditText.getText().toString())) {
-			linkedHashMap.put("should_be", shouldBeNumEditText.getText()
-					.toString());
+
+			classListenTable.should_be = shouldBeNumEditText.getText()
+					.toString();
+
 		} else {
 			return "应到人数未填";
 		}
 		if (!TextUtils.isEmpty(factBeNumEditText.getText().toString())) {
-			linkedHashMap
-					.put("fact_be", factBeNumEditText.getText().toString());
+
+			classListenTable.fact_be = factBeNumEditText.getText().toString();
 		} else {
 			return "实到人数未填";
 		}
 		if (!TextUtils.isEmpty(lateNumEditText.getText().toString())) {
-			linkedHashMap.put("late_num", lateNumEditText.getText().toString());
+
+			classListenTable.late_num = lateNumEditText.getText().toString();
+
 		} else {
 			return "迟到人数未填";
 		}
 		if (!TextUtils.isEmpty(lateRateEditText.getText().toString())) {
-			linkedHashMap.put("late_rate", lateRateEditText.getText()
-					.toString());
+
+			classListenTable.late_rate = lateRateEditText.getText().toString();
+
 		} else {
 			return "迟到率未填";
 		}
 		if (!TextUtils.isEmpty(comeOutEditText.getText().toString())) {
-			linkedHashMap.put("comeout_rate", comeOutEditText.getText()
-					.toString());
+
+			classListenTable.comeout_rate = comeOutEditText.getText()
+					.toString();
 		} else {
 			return "出勤率未填";
 		}
 		if (!TextUtils.isEmpty(classConditionEditText.getText().toString())) {
-			linkedHashMap.put("class_condition", classConditionEditText
-					.getText().toString());
+
+			classListenTable.class_condition = classConditionEditText.getText()
+					.toString();
 		} else {
 			return "课堂情况未填";
 		}
 		if (!TextUtils.isEmpty(stateScoreEditText.getText().toString())) {
-			linkedHashMap.put("state_score", stateScoreEditText.getText()
-					.toString());
+
+			classListenTable.state_score = stateScoreEditText.getText()
+					.toString();
 		} else {
 			return "状态评分未填";
 		}
