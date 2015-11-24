@@ -8,6 +8,8 @@
         android:minSdkVersion="11"
         android:targetSdkVersion="21" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="com.cqupt.act.CustomApplication"
         android:allowBackup="true"
@@ -28,6 +30,10 @@
         <activity android:name="com.cqupt.act.EvaluationAct" >
         </activity>
         <activity android:name="com.cqupt.act.RecordAct" >
+        </activity>
+        <activity android:name="com.cqupt.act.NewsRecordAct" >
+        </activity>
+        <activity android:name="com.cqupt.act.NewsDetailAct" >
         </activity>
 
         <uses-library android:name="android.test.runner" />

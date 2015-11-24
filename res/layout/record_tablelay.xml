@@ -85,6 +85,7 @@
                     android:textColor="@color/black" />
 
                 <TextView
+                    android:id="@+id/rd_tv_class_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -114,6 +115,7 @@
                     android:textColor="@color/black" />
 
                 <TextView
+                    android:id="@+id/rd_tv_class_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -179,6 +181,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
+                    android:id="@+id/rd_tv_lesson_belong"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -193,6 +196,7 @@
                     android:background="@color/divide_grey_color" />
 
                 <TextView
+                    android:id="@+id/rd_tv_student_belong"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -207,6 +211,7 @@
                     android:background="@color/divide_grey_color" />
 
                 <TextView
+                    android:id="@+id/rd_tv_lesson_property"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -272,6 +277,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
+                    android:id="@+id/rd_tv_room_num"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -286,6 +292,7 @@
                     android:background="@color/divide_grey_color" />
 
                 <TextView
+                    android:id="@+id/rd_tv_class_num"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -300,6 +307,7 @@
                     android:background="@color/divide_grey_color" />
 
                 <TextView
+                    android:id="@+id/rd_tv_lesson_time"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -386,6 +394,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
+                    android:id="@+id/rd_tv_score_attitude"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -400,6 +409,7 @@
                     android:background="@color/divide_grey_color" />
 
                 <TextView
+                    android:id="@+id/rd_tv_score_content"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -414,6 +424,7 @@
                     android:background="@color/divide_grey_color" />
 
                 <TextView
+                    android:id="@+id/rd_tv_score_method"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -479,6 +490,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
+                    android:id="@+id/rd_tv_score_manage"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -493,6 +505,7 @@
                     android:background="@color/divide_grey_color" />
 
                 <TextView
+                    android:id="@+id/rd_tv_score_result"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -507,6 +520,7 @@
                     android:background="@color/divide_grey_color" />
 
                 <TextView
+                    android:id="@+id/rd_tv_score_total"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -556,6 +570,7 @@
                     android:textColor="@color/black" />
 
                 <TextView
+                    android:id="@+id/rd_tv_class_station"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -621,6 +636,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
+                    android:id="@+id/rd_tv_is_late"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -635,6 +651,7 @@
                     android:background="@color/divide_grey_color" />
 
                 <TextView
+                    android:id="@+id/rd_tv_is_advance"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -649,6 +666,7 @@
                     android:background="@color/divide_grey_color" />
 
                 <TextView
+                    android:id="@+id/rd_tv_book_hold"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -714,6 +732,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
+                    android:id="@+id/rd_tv_should_num"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -728,6 +747,7 @@
                     android:background="@color/divide_grey_color" />
 
                 <TextView
+                    android:id="@+id/rd_tv_fact_num"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -742,6 +762,7 @@
                     android:background="@color/divide_grey_color" />
 
                 <TextView
+                    android:id="@+id/rd_tv_late_num"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -806,6 +827,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
+                    android:id="@+id/rd_tv_late_rate"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -820,6 +842,7 @@
                     android:background="@color/divide_grey_color" />
 
                 <TextView
+                    android:id="@+id/rd_tv_come_rate"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -834,6 +857,7 @@
                     android:background="@color/divide_grey_color" />
 
                 <TextView
+                    android:id="@+id/rd_tv_state_score"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -883,6 +907,7 @@
                     android:textColor="@color/black" />
 
                 <TextView
+                    android:id="@+id/rd_tv_my_advice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -912,6 +937,7 @@
                     android:textColor="@color/black" />
 
                 <TextView
+                    android:id="@+id/rd_tv_my_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -941,6 +967,7 @@
                     android:textColor="@color/black" />
 
                 <TextView
+                    android:id="@+id/rd_tv_listen_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

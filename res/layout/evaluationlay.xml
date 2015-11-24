@@ -24,7 +24,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="20dp"
-        android:background="#FF6347"
+        android:background="#9C9C9C"
         android:orientation="horizontal" >
 
         <TextView

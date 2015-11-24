@@ -32,6 +32,8 @@ public class ClassListenTable {
 	public String my_name = null;
 	public String listen_time = null;
 
+
+
 	@Override
 	public String toString() {
 		return "ClassListenTable [lesson_belong=" + lesson_belong

@@ -15,15 +15,16 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cqupt.entity.NewsItem;
 import com.cqupt.entity.RecordItem;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.ViewUtils;
 
-public class RecordAct extends BaseAct {
+public class NewsRecordAct extends BaseAct {
 	// @ViewInject(R.id.pull_to_refresh_mlistview)
 	PullToRefreshListView listView;
-	List<RecordItem> recordItems;
+	List<NewsItem> recordItems;
 	Handler handler;
 	RecordItemAdapter adapter;
 
@@ -36,7 +37,7 @@ public class RecordAct extends BaseAct {
 		ViewUtils.inject(this);
 		listView = (PullToRefreshListView) findViewById(R.id.pull_to_refresh_mlistview);
 		handler = new Handler();
-		recordItems = new ArrayList<RecordItem>();
+		recordItems = new ArrayList<NewsItem>();
 
 		adapter = new RecordItemAdapter();
 		initRefreshView();
@@ -83,9 +84,9 @@ public class RecordAct extends BaseAct {
 					int position, long id) {
 				// TODO Auto-generated method stub
 
-				Intent intent = new Intent(RecordAct.this, RecordTableAct.class);
-				intent.putExtra("recordId",
-						recordItems.get(position - 1).recordId);
+				Intent intent = new Intent(NewsRecordAct.this,
+						NewsDetailAct.class);
+				intent.putExtra("url", recordItems.get(position-1).newsUrl);
 				startActivity(intent);
 			}
 		});
@@ -93,24 +94,23 @@ public class RecordAct extends BaseAct {
 
 	private void iniItems() {
 		// TODO Auto-generated method stub
-		RecordItem item1 = new RecordItem();
+		NewsItem item1 = new NewsItem();
 
-		item1.recordId = "1";
-		item1.recordTime = "2015-8-21 9:23:11";
-		item1.recordTeacher = "张厚云";
-		item1.recordTitle = "大学英语";
+		item1.newsTime = "2015-9-11 14:21:22";
+		item1.newsTitle = "2015重庆邮电大学研究生选拔简章";
+		item1.newsUrl = "http://www.baidu.com";
 
-		RecordItem item2 = new RecordItem();
-		item2.recordId = "2";
-		item2.recordTime = "2015-9-11 14:21:22";
-		item2.recordTeacher = "冉姜";
-		item2.recordTitle = "高等数学";
+		NewsItem item2 = new NewsItem();
 
-		RecordItem item3 = new RecordItem();
-		item3.recordId = "3";
-		item3.recordTime = "2015-9-26 10:44:22";
-		item3.recordTeacher = "秦林";
-		item3.recordTitle = "大学物理";
+		item2.newsTime = "2015-10-12 9:30:00";
+		item2.newsTitle = "关于组织学生参加全国计算机考试说明";
+		item2.newsUrl = "http://www.qq.com";
+
+		NewsItem item3 = new NewsItem();
+
+		item3.newsTime = "2015-11-1 19:20:14";
+		item3.newsTitle = "关于组织学生参加全国计算机考试说明";
+		item3.newsUrl = "http://www.sina.com";
 
 		recordItems.add(item1);
 		recordItems.add(item2);
@@ -145,30 +145,26 @@ public class RecordAct extends BaseAct {
 			if (convertView == null) {
 
 				convertView = LayoutInflater.from(customApplication).inflate(
-						R.layout.record_itemlay, null);
+						R.layout.news_itemlay, null);
 				ViewHolder viewHolder = new ViewHolder();
 				viewHolder.timeTextView = (TextView) convertView
-						.findViewById(R.id.tv_record_time);
-				viewHolder.nameTextView = (TextView) convertView
-						.findViewById(R.id.tv_record_name);
+						.findViewById(R.id.tv_news_time);
+
 				viewHolder.titleTextView = (TextView) convertView
-						.findViewById(R.id.tv_record_title);
+						.findViewById(R.id.tv_news_title);
 				convertView.setTag(viewHolder);
 
 			}
 			holder = (ViewHolder) convertView.getTag();
-			RecordItem item = recordItems.get(position);
-			holder.timeTextView.setText(item.recordTime);
-			holder.nameTextView.setText(item.recordTeacher);
-			holder.titleTextView.setText(item.recordTitle);
+			NewsItem item = recordItems.get(position);
+			holder.timeTextView.setText(item.newsTime);
+			holder.titleTextView.setText(item.newsTitle);
 
-			// Log.i(", msg)
 			return convertView;
 		}
 
 		class ViewHolder {
 			TextView timeTextView;
-			TextView nameTextView;
 			TextView titleTextView;
 		}
 	}

@@ -73,6 +73,12 @@ public class MainAct extends BaseAct {
 
 	}
 
+	@OnClick(R.id.main_bt3)
+	public void bt3(View v) {
+		startActivity(new Intent(MainAct.this, NewsRecordAct.class));
+
+	}
+
 	@Override
 	protected void onRestart() {
 		// TODO Auto-generated method stub
