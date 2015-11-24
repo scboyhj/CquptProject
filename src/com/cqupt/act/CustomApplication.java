@@ -7,6 +7,7 @@ import android.os.Handler;
 
 public class CustomApplication extends Application {
 
+	public String userId;
 	public HttpConnectUtils httpConnectUtils;
 
 	@Override

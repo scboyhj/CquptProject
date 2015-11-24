@@ -35,6 +35,10 @@
         </activity>
         <activity android:name="com.cqupt.act.NewsDetailAct" >
         </activity>
+        <activity android:name="com.cqupt.act.RecordTableAct" >
+        </activity>
+        <activity android:name="com.cqupt.act.MyInfoAct" >
+        </activity>
 
         <uses-library android:name="android.test.runner" />
     </application>
