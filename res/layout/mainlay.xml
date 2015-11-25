@@ -97,7 +97,7 @@
                 android:layout_weight="1"
                 android:background="#3A5FCD"
                 android:gravity="center"
-                android:text="资讯"
+                android:text="公告"
                 android:textColor="@color/white"
                 android:textSize="@dimen/main_title_textsize" />
 

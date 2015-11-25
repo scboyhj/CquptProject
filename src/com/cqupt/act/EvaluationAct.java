@@ -1,11 +1,13 @@
 package com.cqupt.act;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -54,6 +56,8 @@ public class EvaluationAct extends BaseAct {
 	private int currentPageIndex = 0;
 	private View buttomMoveView;
 
+	ProgressDialog progressDialog;
+
 	public interface CollectDataInViewListener {
 
 		public String collectDataInView();
@@ -98,6 +102,7 @@ public class EvaluationAct extends BaseAct {
 
 	@OnClick(R.id.bt_send_data)
 	public void sendData(View v) {
+
 		String str1 = ((BaseFrag) fragments.get(0)).collectDataInView();
 
 		String str2 = ((BaseFrag) fragments.get(1)).collectDataInView();
@@ -117,32 +122,49 @@ public class EvaluationAct extends BaseAct {
 			} else {
 				CustomViewUtils.showInToast(customApplication, st);
 				isComplement = false;
-				break;
+
+				return;
 			}
 		}
+		progressDialog = CustomViewUtils.showProgressDialog(EvaluationAct.this);
+		progressDialog.show();
 		if (isComplement) {
-			CustomViewUtils.showInToast(customApplication, "上传成功");
+			CustomViewUtils.showInToast(customApplication, "正在上传...");
 			((BaseFrag) fragments.get(0)).showSaveInMapsData();
 		}
-//		String data = "";
-//		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-//		nameValuePairs.add(new BasicNameValuePair("data", data));
-//
-//		customApplication.httpConnectUtils.sendRequestByPost(
-//				REQUST_TYPE.SEND_TABLE, new HttpListener() {
-//
-//					@Override
-//					public void setResponseResult(String resultString) {
-//						// TODO Auto-generated method stub
-//						if (resultString.equals("ok")) {
-//
-//						} else if (resultString.equals("no")) {
-//
-//						} else {
-//
-//						}
-//					}
-//				}, nameValuePairs);
+
+		String data = ((BaseFrag) fragments.get(0)).showSaveInMapsData();
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		try {
+			nameValuePairs.add(new BasicNameValuePair("data", new String(data
+					.getBytes(), "utf-8")));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		customApplication.httpConnectUtils.sendRequestByPost(
+				REQUST_TYPE.SEND_TABLE, new HttpListener() {
+
+					@Override
+					public void setResponseResult(String resultString) {
+						// TODO Auto-generated method stub
+						if (resultString.equals("ok")) {
+							CustomViewUtils.showInToast(customApplication,
+									"上传成功！O(∩_∩)O哈哈~");
+
+							EvaluationAct.this.finish();
+
+						} else if (resultString.equals("no")) {
+							CustomViewUtils.showInToast(customApplication,
+									resultString);
+						} else {
+							CustomViewUtils.showInToast(customApplication,
+									resultString);
+						}
+						progressDialog.cancel();
+					}
+				}, nameValuePairs);
 
 	}
 

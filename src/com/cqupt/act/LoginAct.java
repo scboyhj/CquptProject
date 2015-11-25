@@ -47,6 +47,8 @@ public class LoginAct extends BaseAct {
 				&& TextUtils.isEmpty(userPwdEditText.getText().toString());
 	}
 
+	String userIdString;
+
 	@OnClick(R.id.bt_login)
 	public void Login(View v) {
 
@@ -56,7 +58,7 @@ public class LoginAct extends BaseAct {
 			return;
 		}
 
-		String userIdString = userIdEditText.getText().toString();
+		userIdString = userIdEditText.getText().toString();
 		String userPwdString = userPwdEditText.getText().toString();
 
 		HashMap<String, String> params = new HashMap<String, String>();
@@ -65,35 +67,40 @@ public class LoginAct extends BaseAct {
 		final ProgressDialog dialog = CustomViewUtils.showProgressDialog(this);
 		dialog.show();
 
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				dialog.cancel();
-				startActivity(new Intent(LoginAct.this, MainAct.class));
-
-			}
-		}, 500);
-
-		// httpConnectUtils.sendRequestByGet(REQUST_TYPE.LOGIN, params,
-		// new HttpListener() {
+		// Timer timer = new Timer();
+		// timer.schedule(new TimerTask() {
 		//
 		// @Override
-		// public void setResponseResult(String resultString) {
-		// dialog.cancel();
+		// public void run() {
 		// // TODO Auto-generated method stub
-		// if (resultString.equals("ok")) {
+		// dialog.cancel();
+		// startActivity(new Intent(LoginAct.this, MainAct.class));
 		//
-		// } else if (resultString.equals("no")) {
-		//
-		// } else {
-		// CustomViewUtils.showInToast(
-		// getApplicationContext(), "Î´Öª´íÎó£¡");
 		// }
-		// }
-		// });
+		// }, 500);
+
+		httpConnectUtils.sendRequestByGet(REQUST_TYPE.LOGIN, params,
+				new HttpListener() {
+
+					@Override
+					public void setResponseResult(String resultString) {
+						dialog.cancel();
+						// TODO Auto-generated method stub
+						if (resultString.equals("ok")) {
+
+							startActivity(new Intent(LoginAct.this,
+									MainAct.class));
+							customApplication.userId = userIdString;
+						} else if (resultString.equals("no")) {
+
+						} else {
+							CustomViewUtils.showInToast(
+									getApplicationContext(), "Î´Öª´íÎó£¡"
+											+ resultString);
+						}
+
+					}
+				});
 	}
 
 	@OnClick(R.id.bt_register)

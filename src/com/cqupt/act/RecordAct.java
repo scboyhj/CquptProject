@@ -1,11 +1,14 @@
 package com.cqupt.act;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +18,12 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cqupt.customview.CustomViewUtils;
 import com.cqupt.entity.RecordItem;
+import com.cqupt.http.HttpConnectUtils;
+import com.cqupt.setting.HttpSettings.REQUST_TYPE;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.ViewUtils;
@@ -26,6 +34,7 @@ public class RecordAct extends BaseAct {
 	List<RecordItem> recordItems;
 	Handler handler;
 	RecordItemAdapter adapter;
+	int currentPage = 0;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
@@ -64,16 +73,54 @@ public class RecordAct extends BaseAct {
 			@Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 				// TODO Auto-generated method stub
-				handler.postDelayed(new Runnable() {
 
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						iniItems();
-						adapter.notifyDataSetChanged();
-						listView.onRefreshComplete();
-					}
-				}, 300);
+				HashMap<String, String> map = new HashMap<String, String>();
+				map.put("user_id", customApplication.userId);
+				map.put("page", (++currentPage) + "");
+				customApplication.httpConnectUtils.sendRequestByGet(
+						REQUST_TYPE.GET_RECORD_ITEMS, map,
+						new HttpConnectUtils.HttpListener() {
+
+							@Override
+							public void setResponseResult(String resultString) {
+								// TODO Auto-generated method stub
+								if (resultString == null
+										|| resultString.length() == 0) {
+									CustomViewUtils.showInToast(
+											customApplication, "连接错误！"
+													+ resultString);
+								} else if (resultString.equals("no")) {
+									CustomViewUtils.showInToast(
+											customApplication, "没有更多了");
+									currentPage--;
+								} else {
+									Gson gson = new Gson();
+									Log.i("RecordAct", resultString);
+
+									Type type = new TypeToken<ArrayList<RecordItem>>() {
+									}.getType();
+
+									ArrayList<RecordItem> arrayList = gson
+											.fromJson(resultString, type);
+									for (int i = 0; i < arrayList.size(); i++) {
+										recordItems.add(arrayList.get(i));
+									}
+									adapter.notifyDataSetChanged();
+									listView.onRefreshComplete();
+								}
+							}
+						});
+
+				// handler.postDelayed(new Runnable() {
+				//
+				// @Override
+				// public void run() {
+				// // TODO Auto-generated method stub
+				// iniItems();
+				// adapter.notifyDataSetChanged();
+				// listView.onRefreshComplete();
+				// }
+				// }, 300);
 			}
 		});
 		listView.setOnItemClickListener(new OnItemClickListener() {

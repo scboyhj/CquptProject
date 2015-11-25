@@ -26,12 +26,13 @@ public class BaseFrag extends Fragment implements CollectDataInViewListener {
 
 	}
 
-	public void showSaveInMapsData() {
+	public String showSaveInMapsData() {
 
 		Gson gson = new Gson();
 		String gsonString = gson.toJson(classListenTable);
 
 		Log.i("json_classListenTable", gsonString);
+		return gsonString;
 
 	}
 

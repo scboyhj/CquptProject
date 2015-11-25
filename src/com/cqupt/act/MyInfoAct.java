@@ -12,6 +12,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 public class MyInfoAct extends BaseAct {
@@ -36,32 +37,33 @@ public class MyInfoAct extends BaseAct {
 
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("user_id", customApplication.userId);
-		// progressDialog = CustomViewUtils.showProgressDialog(MyInfoAct.this);
-		// progressDialog.show();
-		// customApplication.httpConnectUtils.sendRequestByGet(
-		// REQUST_TYPE.GET_MY_INFO, map,
-		// new HttpConnectUtils.HttpListener() {
-		//
-		// @Override
-		// public void setResponseResult(String resultString) {
-		// // TODO Auto-generated method stub
-		// if (resultString == null || resultString.length() == 0) {
-		// CustomViewUtils.showInToast(customApplication,
-		// "连接错误");
-		// } else {
-		// Gson gson = new Gson();
-		// User user = gson.fromJson(resultString, User.class);
-		// loadDataToView(user);
-		// }
-		// progressDialog.cancel();
-		// }
-		// });
+		progressDialog = CustomViewUtils.showProgressDialog(MyInfoAct.this);
+		progressDialog.show();
+		customApplication.httpConnectUtils.sendRequestByGet(
+				REQUST_TYPE.GET_MY_INFO, map,
+				new HttpConnectUtils.HttpListener() {
+
+					@Override
+					public void setResponseResult(String resultString) {
+						// TODO Auto-generated method stub
+						if (resultString == null || resultString.length() == 0) {
+							CustomViewUtils.showInToast(customApplication,
+									"连接错误");
+						} else {
+							Log.i("MyInfoAct", resultString);
+							Gson gson = new Gson();
+							User user = gson.fromJson(resultString, User.class);
+							loadDataToView(user);
+						}
+						progressDialog.cancel();
+					}
+				});
 
 	}
 
 	protected void loadDataToView(User user) {
 		// TODO Auto-generated method stub
-		myIdTextView.setText(user.myName);
+		myIdTextView.setText(user.myId);
 		myNameTextView.setText(user.myName);
 		myStatusTextView.setText(user.myStatus);
 		mySubmitTextView.setText(user.mySubmit);

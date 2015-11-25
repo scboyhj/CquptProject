@@ -15,14 +15,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="主题："
+            android:text="内容："
             android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/tv_news_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="重庆邮电大学新生运动会即将开幕"
+            android:text="重庆邮电大学新生运动会即将开幕重庆邮电大学新生运动会即将开幕"
             android:textColor="@color/white" />
     </LinearLayout>
 
@@ -30,7 +30,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp" >
+        android:gravity="right"
+        android:padding="2dp" >
 
         <TextView
             android:layout_width="wrap_content"

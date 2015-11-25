@@ -1,6 +1,10 @@
 package com.cqupt.http;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -102,8 +106,23 @@ public class CustomHttpUtils {
 						@Override
 						public void run() {
 							// TODO Auto-generated method stub
-							httpListener.setResponseResult(httpResponse
-									.toString());
+							try {
+								InputStream inputStream = httpResponse
+										.getEntity().getContent();
+								BufferedReader reader = new BufferedReader(
+										new InputStreamReader(inputStream));
+								String str = reader.readLine();
+
+								httpListener.setResponseResult(new String(str
+										.getBytes(), "utf-8"));
+							} catch (IllegalStateException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
 						}
 					});
 				} else {

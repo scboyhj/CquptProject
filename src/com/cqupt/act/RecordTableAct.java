@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.cqupt.customview.CustomViewUtils;
@@ -85,30 +86,31 @@ public class RecordTableAct extends BaseAct {
 		HashMap<String, String> maps = new HashMap<String, String>();
 		maps.put("item_id", itemId);
 
-//		progressDialog = CustomViewUtils.showProgressDialog(customApplication);
-//		progressDialog.show();
-//		customApplication.httpConnectUtils.sendRequestByGet(
-//				REQUST_TYPE.GET_ITEM, maps,
-//				new HttpConnectUtils.HttpListener() {
-//
-//					@Override
-//					public void setResponseResult(String resultString) {
-//						// TODO Auto-generated method stub
-//
-//						if (resultString == null || resultString.length() == 0) {
-//							CustomViewUtils.showInToast(customApplication,
-//									"∂¡»° ß∞‹");
-//						} else {
-//							Gson gson = new Gson();
-//							ClassListenTable classListenTable = gson.fromJson(
-//									resultString, ClassListenTable.class);
-//							loadDateToView(classListenTable);
-//
-//						}
-//						progressDialog.cancel();
-//
-//					}
-//				});
+		progressDialog = CustomViewUtils.showProgressDialog(RecordTableAct.this);
+		progressDialog.show();
+		customApplication.httpConnectUtils.sendRequestByGet(
+				REQUST_TYPE.GET_RECORD_ITEM, maps,
+				new HttpConnectUtils.HttpListener() {
+
+					@Override
+					public void setResponseResult(String resultString) {
+						// TODO Auto-generated method stub
+
+						if (resultString == null || resultString.length() == 0) {
+							CustomViewUtils.showInToast(customApplication,
+									"∂¡»° ß∞‹");
+						} else {
+							Gson gson = new Gson();
+							Log.i("RecordTableAct", resultString);
+							ClassListenTable classListenTable = gson.fromJson(
+									resultString, ClassListenTable.class);
+							loadDateToView(classListenTable);
+
+						}
+						progressDialog.cancel();
+
+					}
+				});
 
 	}
 
