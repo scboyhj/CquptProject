@@ -37,6 +37,8 @@
         </activity>
         <activity android:name="com.cqupt.act.MyInfoAct" >
         </activity>
+        <activity android:name="com.cqupt.act.ArrangeAct" >
+        </activity>
 
         <uses-library android:name="android.test.runner" />
     </application>

@@ -108,7 +108,7 @@
                 android:layout_weight="1"
                 android:background="#1E90FF"
                 android:gravity="center"
-                android:text="我的"
+                android:text="安排"
                 android:textColor="@color/white"
                 android:textSize="@dimen/main_title_textsize" />
         </LinearLayout>

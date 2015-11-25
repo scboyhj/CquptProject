@@ -81,7 +81,7 @@ public class MainAct extends BaseAct {
 
 	@OnClick(R.id.main_bt4)
 	public void bt4(View v) {
-		startActivity(new Intent(MainAct.this, MyInfoAct.class));
+		startActivity(new Intent(MainAct.this, ArrangeAct.class));
 
 	}
 
