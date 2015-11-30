@@ -28,6 +28,18 @@ public class EvaluationcContentFrag extends BaseFrag {
 	EditText resultEditText;
 
 	@Override
+	public void backDataInView() {
+		// TODO Auto-generated method stub
+
+		attitudeEditText.setText(classListenTable.getScore_attitude());
+		contentEditText.setText(classListenTable.getScore_content());
+		methodEditText.setText(classListenTable.getScore_method());
+		manageEditText.setText(classListenTable.getScore_manage());
+		resultEditText.setText(classListenTable.getScore_result());
+
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -36,7 +48,7 @@ public class EvaluationcContentFrag extends BaseFrag {
 				R.layout.frag_content_lay, null);
 
 		ViewUtils.inject(this, viewGroup);
-
+		showDataInView();
 		return viewGroup;
 	}
 

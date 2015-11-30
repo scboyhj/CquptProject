@@ -28,6 +28,13 @@ public class AdviceInClassFrag extends BaseFrag {
 	TextView timeTextView;
 
 	@Override
+	public void backDataInView() {
+		adviceEditText.setText(classListenTable.getMy_advice());
+		nameEditText.setText(classListenTable.getMy_name());
+		timeTextView.setText(classListenTable.getListen_time());
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -38,6 +45,7 @@ public class AdviceInClassFrag extends BaseFrag {
 		ViewUtils.inject(this, viewGroup);
 
 		initTime();
+		showDataInView();
 		return viewGroup;
 	}
 

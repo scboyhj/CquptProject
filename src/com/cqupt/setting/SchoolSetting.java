@@ -20,6 +20,30 @@ public final class SchoolSetting {
 		kindOfCourse.add("全校任选");
 	}
 
+	public static int findInstitutesPositionByName(String name) {
+
+		for (int i = 0; i < institutes.size(); i++) {
+			String str = institutes.get(i);
+			if (str.equals(name)) {
+				return i;
+			}
+		}
+
+		return 0;
+	}
+
+	public static int findKindOfCoursePositionByName(String name) {
+
+		for (int i = 0; i < kindOfCourse.size(); i++) {
+			String str = kindOfCourse.get(i);
+			if (str.equals(name)) {
+				return i;
+			}
+		}
+
+		return 0;
+	}
+
 	public static List<String> getInstitutes() {
 		return institutes;
 	}

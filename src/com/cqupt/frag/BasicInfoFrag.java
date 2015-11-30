@@ -47,6 +47,27 @@ public class BasicInfoFrag extends BaseFrag {
 	ViewGroup viewGroup;
 
 	@Override
+	public void backDataInView() {
+		// TODO Auto-generated method stub
+		lessonNameEditText.setText(classListenTable.getLesson_name());
+		lessonRoomNumEditText.setText(classListenTable.getRoom_num());
+		lessonClassNumEditText.setText(classListenTable.getClass_num());
+		lessonContentEditText.setText(classListenTable.getClass_content());
+		lessonTimeTextView.setText(classListenTable.getClass_time());
+
+		spinnerCourseBelong.setSelection(SchoolSetting
+				.findInstitutesPositionByName(classListenTable
+						.getLesson_belong()));
+
+		spinnerStudentBelong.setSelection(SchoolSetting
+				.findInstitutesPositionByName(classListenTable
+						.getStudent_belong()));
+		spinnerKindOfCourse.setSelection(SchoolSetting
+				.findKindOfCoursePositionByName(classListenTable
+						.getLesson_property()));
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -60,6 +81,7 @@ public class BasicInfoFrag extends BaseFrag {
 		initSpinnerStudentBelong();
 		initSpinnerKindOfCourse();
 		initClassTimeBegin();
+		showDataInView();
 		return viewGroup;
 	}
 

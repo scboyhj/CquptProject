@@ -37,8 +37,9 @@ public class HttpConnectUtils extends AndroidTestCase {
 		}
 		urlString = urlString.substring(0, urlString.length() - 1);
 		Log.i("urlString", urlString);
-		customHttpUtils.sendRequestServerByGet(urlString, httpListener);
-
+		customHttpUtils.sendRequestServerByGet(urlString, httpListener, type);
+		// customHttpUtils.sendRequestServerByGet("http://www.youtube.com",
+		// httpListener);
 	}
 
 	public void sendRequestByPost(REQUST_TYPE type, HttpListener httpListener,
@@ -47,6 +48,11 @@ public class HttpConnectUtils extends AndroidTestCase {
 
 		Log.i("urlString", urlString);
 		customHttpUtils.sendRequestServerByPost(urlString, httpListener,
-				nameValuePairs);
+				nameValuePairs, type);
 	}
+
+	public void cancelTaskByType(REQUST_TYPE type) {
+		customHttpUtils.cancelTaskByType(type);
+	}
+
 }

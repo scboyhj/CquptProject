@@ -48,6 +48,66 @@ public class RecordInClassFrag extends BaseFrag {
 	@ViewInject(R.id.et_state_score)
 	EditText stateScoreEditText;
 
+	int[] isAdvanceIds = { R.id.rb_advance_yes, R.id.rb_advance_no };
+
+	int[] isLateIds = { R.id.rb_late_yes, R.id.rb_late_no };
+
+	int[] bookHoldIds = { R.id.rb_quality_high, R.id.rb_quality_middle,
+			R.id.rb_quality_low };
+
+	@Override
+	public void backDataInView() {
+
+		// isAdvanceRadioGroup.getChildAt(
+		// parseToPosition(classListenTable.getIs_advance())).setSelected(
+		// true);
+		// isLateRadioGroup.getChildAt(
+		// parseToPosition(classListenTable.getIs_late())).setSelected(
+		// true);
+		//
+		// bookHoldRadioGroup.getChildAt(
+		// parseToPosition(classListenTable.getBook_hold())).setSelected(
+		// true);
+
+		isAdvanceRadioGroup.check(isAdvanceIds[parseToPosition(classListenTable
+				.getIs_advance())]);
+		isLateRadioGroup.check(isLateIds[parseToPosition(classListenTable
+				.getIs_late())]);
+		bookHoldRadioGroup
+				.check(bookHoldIds[parseBookHoldToInt(classListenTable
+						.getBook_hold())]);
+
+		shouldBeNumEditText.setText(classListenTable.getShould_be());
+		factBeNumEditText.setText(classListenTable.getFact_be());
+		lateNumEditText.setText(classListenTable.getLate_num());
+		lateRateEditText.setText(classListenTable.getLate_rate());
+		comeOutEditText.setText(classListenTable.getComeout_rate());
+		classConditionEditText.setText(classListenTable.getClass_condition());
+		stateScoreEditText.setText(classListenTable.getState_score());
+
+	}
+
+	public int parseBookHoldToInt(String str) {
+		if (str.equals("high")) {
+			return 0;
+		} else if (str.equals("middle")) {
+			return 1;
+		} else if (str.equals("low")) {
+			return 2;
+		}
+		return 0;
+
+	}
+
+	public int parseToPosition(String str) {
+		if (str.equals("yes")) {
+			return 0;
+		} else {
+			return 1;
+		}
+
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,6 +119,7 @@ public class RecordInClassFrag extends BaseFrag {
 		ViewUtils.inject(this, viewGroup);
 
 		initRadioGroup();
+		showDataInView();
 		return viewGroup;
 	}
 

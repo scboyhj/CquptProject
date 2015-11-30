@@ -4,12 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -32,10 +35,16 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
+import org.w3c.dom.Entity;
 
 import android.os.Handler;
+import android.util.Log;
 
 import com.cqupt.http.HttpConnectUtils.HttpListener;
+import com.cqupt.setting.HttpSettings.REQUST_TYPE;
+import com.lidroid.xutils.http.client.multipart.MultipartEntity;
+import com.lidroid.xutils.http.client.multipart.content.ContentBody;
+import com.lidroid.xutils.http.client.multipart.content.FileBody;
 
 public class CustomHttpUtils {
 
@@ -44,16 +53,20 @@ public class CustomHttpUtils {
 
 	private Handler mainHandler;
 
+	private LinkedHashMap<REQUST_TYPE, FutureTask<?>> futureTasksHashMap;
+
 	public CustomHttpUtils(Handler handler) {
 		initClient();
 		initExecutor();
 		mainHandler = handler;
+		futureTasksHashMap = new LinkedHashMap<REQUST_TYPE, FutureTask<?>>();
 	}
 
 	private void initClient() {
+		// HttpParams httpParams = new BasicHttpParams();
 		HttpParams httpParams = new BasicHttpParams();
-		HttpConnectionParams.setConnectionTimeout(httpParams, 20000);
-
+		HttpConnectionParams.setConnectionTimeout(httpParams, 10000);
+		HttpConnectionParams.setSoTimeout(httpParams, 10000);
 		SchemeRegistry registry = new SchemeRegistry();
 		registry.register(new Scheme("http", PlainSocketFactory
 				.getSocketFactory(), 80));
@@ -69,27 +82,81 @@ public class CustomHttpUtils {
 		executorService = Executors.newFixedThreadPool(10);
 	}
 
-	public void sendRequestServerByGet(String url, HttpListener listener) {
+	public void sendRequestServerByGet(String url, HttpListener listener,
+			REQUST_TYPE type) {
 
-		MyGetTask myTask = new MyGetTask(url, listener);
-		executorService.submit(myTask);
+		final MyGetTask myTask = new MyGetTask(url, listener, type);
+		FutureTask<?> futureTask = new FutureTask<Void>(myTask, null) {
+
+			@Override
+			protected void done() {
+				// TODO Auto-generated method stub
+				super.done();
+				futureTasksHashMap.remove(myTask.type);
+			}
+		};
+
+		if (!futureTasksHashMap.containsKey(type)) {
+			futureTasksHashMap.put(type, futureTask);
+		} else {
+			FutureTask<?> ft = futureTasksHashMap.get(type);
+			ft.cancel(true);
+			ft = null;
+			futureTasksHashMap.put(type, futureTask);
+
+		}
+		executorService.submit(futureTask);
+
+	}
+
+	public void cancelTaskByType(REQUST_TYPE type) {
+		FutureTask<?> ft = futureTasksHashMap.get(type);
+		if (ft != null) {
+			ft.cancel(true);
+
+			Log.i("myTag", "ft.isCancelled()" + ft.isCancelled());
+			futureTasksHashMap.remove(ft);
+		}
 	}
 
 	public void sendRequestServerByPost(String url, HttpListener listener,
-			List<NameValuePair> listNameValuePairs) {
+			List<NameValuePair> listNameValuePairs, REQUST_TYPE type) {
 
-		MyPostTask myTask = new MyPostTask(url, listener, listNameValuePairs);
-		executorService.submit(myTask);
+		final MyPostTask myTask = new MyPostTask(url, listener,
+				listNameValuePairs, type);
+		FutureTask<?> futureTask = new FutureTask<Void>(myTask, null) {
+
+			@Override
+			protected void done() {
+				// TODO Auto-generated method stub
+				super.done();
+				futureTasksHashMap.remove(myTask.type);
+			}
+		};
+
+		if (!futureTasksHashMap.containsKey(type)) {
+			futureTasksHashMap.put(type, futureTask);
+		} else {
+			FutureTask<?> ft = futureTasksHashMap.get(type);
+			ft.cancel(true);
+			ft = null;
+			futureTasksHashMap.put(type, futureTask);
+
+		}
+		executorService.submit(futureTask);
 	}
 
 	class MyGetTask implements Runnable {
 		String urlString;
 		HttpListener httpListener;
 		HttpResponse httpResponse;
+		REQUST_TYPE type;
 
-		public MyGetTask(String urlStr, HttpListener listener) {
+		public MyGetTask(String urlStr, HttpListener listener,
+				REQUST_TYPE reqType) {
 			// TODO Auto-generated constructor stub
 			urlString = urlStr;
+			type = reqType;
 			httpListener = listener;
 		}
 
@@ -126,14 +193,22 @@ public class CustomHttpUtils {
 						}
 					});
 				} else {
-
+					Log.i("HttpLog",
+							""
+									+ httpResponse.getStatusLine()
+											.getStatusCode()
+									+ " and "
+									+ EntityUtils.toString(httpResponse
+											.getEntity()));
 				}
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				// e.printStackTrace();
+				httpListener.setResponseResult("error");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				// e.printStackTrace();
+				httpListener.setResponseResult("error");
 			}
 
 		}
@@ -144,13 +219,15 @@ public class CustomHttpUtils {
 		HttpListener httpListener;
 		HttpResponse httpResponse;
 		List<NameValuePair> listNameValuePairs;
+		REQUST_TYPE type;
 
 		public MyPostTask(String urlStr, HttpListener listener,
-				List<NameValuePair> list) {
+				List<NameValuePair> list, REQUST_TYPE reqType) {
 			// TODO Auto-generated constructor stub
 			urlString = urlStr;
 			httpListener = listener;
 			listNameValuePairs = list;
+			type = reqType;
 		}
 
 		@Override
@@ -163,6 +240,7 @@ public class CustomHttpUtils {
 
 				httpPost.setEntity(new UrlEncodedFormEntity(listNameValuePairs,
 						"utf-8"));
+
 				httpResponse = httpClient.execute(httpPost);
 				if (httpResponse.getStatusLine().getStatusCode() == 200) {
 					mainHandler.post(new Runnable() {
@@ -187,10 +265,13 @@ public class CustomHttpUtils {
 				}
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				httpListener.setResponseResult("error");
+				// e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				httpListener.setResponseResult("error");
+				// e.printStackTrace();
+
 			}
 
 		}

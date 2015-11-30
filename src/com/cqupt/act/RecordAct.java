@@ -43,6 +43,7 @@ public class RecordAct extends BaseAct {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recordlay);
 		ViewUtils.inject(this);
+		type = REQUST_TYPE.GET_RECORD_ITEMS;
 		listView = (PullToRefreshListView) findViewById(R.id.pull_to_refresh_mlistview);
 		handler = new Handler();
 		recordItems = new ArrayList<RecordItem>();
@@ -86,13 +87,14 @@ public class RecordAct extends BaseAct {
 								// TODO Auto-generated method stub
 								if (resultString == null
 										|| resultString.length() == 0) {
-									CustomViewUtils.showInToast(
-											customApplication, "连接错误！"
-													+ resultString);
+
+									sendMsgShowInToastDelay("连接错误");
 								} else if (resultString.equals("no")) {
-									CustomViewUtils.showInToast(
-											customApplication, "没有更多了");
+
+									sendMsgShowInToastDelay("没有更多了");
 									currentPage--;
+								} else if (resultString.equals("error")) {
+									sendMsgShowInToastDelay("网络异常，请稍后再试");
 								} else {
 									Gson gson = new Gson();
 									Log.i("RecordAct", resultString);
@@ -106,21 +108,21 @@ public class RecordAct extends BaseAct {
 										recordItems.add(arrayList.get(i));
 									}
 									adapter.notifyDataSetChanged();
-									listView.onRefreshComplete();
+
 								}
+								handler.postDelayed(new Runnable() {
+
+									@Override
+									public void run() {
+										// TODO Auto-generated method
+										// stub
+										listView.onRefreshComplete();
+									}
+								}, 200);
+
 							}
 						});
 
-				// handler.postDelayed(new Runnable() {
-				//
-				// @Override
-				// public void run() {
-				// // TODO Auto-generated method stub
-				// iniItems();
-				// adapter.notifyDataSetChanged();
-				// listView.onRefreshComplete();
-				// }
-				// }, 300);
 			}
 		});
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -136,32 +138,6 @@ public class RecordAct extends BaseAct {
 				startActivity(intent);
 			}
 		});
-	}
-
-	private void iniItems() {
-		// TODO Auto-generated method stub
-		RecordItem item1 = new RecordItem();
-
-		item1.recordId = "1";
-		item1.recordTime = "2015-8-21 9:23:11";
-		item1.recordTeacher = "张厚云";
-		item1.recordTitle = "大学英语";
-
-		RecordItem item2 = new RecordItem();
-		item2.recordId = "2";
-		item2.recordTime = "2015-9-11 14:21:22";
-		item2.recordTeacher = "冉姜";
-		item2.recordTitle = "高等数学";
-
-		RecordItem item3 = new RecordItem();
-		item3.recordId = "3";
-		item3.recordTime = "2015-9-26 10:44:22";
-		item3.recordTeacher = "秦林";
-		item3.recordTitle = "大学物理";
-
-		recordItems.add(item1);
-		recordItems.add(item2);
-		recordItems.add(item3);
 	}
 
 	class RecordItemAdapter extends BaseAdapter {
@@ -209,7 +185,6 @@ public class RecordAct extends BaseAct {
 			holder.nameTextView.setText(item.recordTeacher);
 			holder.titleTextView.setText(item.recordTitle);
 
-			// Log.i(", msg)
 			return convertView;
 		}
 

@@ -31,7 +31,7 @@ public class ArrangeAct extends BaseAct {
 	PullToRefreshListView listView;
 	List<ArrangeItem> arrageItems;
 	Handler handler;
-	RecordItemAdapter adapter;
+	ArrangeItemAdapter adapter;
 	int currentPage = 0;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -40,12 +40,13 @@ public class ArrangeAct extends BaseAct {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recordlay);
+		type=REQUST_TYPE.GET_ARRANGE_ITEMS;
 		ViewUtils.inject(this);
 		listView = (PullToRefreshListView) findViewById(R.id.pull_to_refresh_mlistview);
 		handler = new Handler();
 		arrageItems = new ArrayList<ArrangeItem>();
 
-		adapter = new RecordItemAdapter();
+		adapter = new ArrangeItemAdapter();
 		initRefreshView();
 
 		handler.postDelayed(new Runnable() {
@@ -101,6 +102,8 @@ public class ArrangeAct extends BaseAct {
 															"没有了更多了");
 											currentPage--;
 
+										} else if (resultString.equals("error")) {
+											sendMsgShowInToastDelay("网络异常，请稍后再试");
 										} else {
 											Log.i("ArrangeAct", resultString);
 											Type type = new TypeToken<ArrayList<ArrangeItem>>() {
@@ -115,9 +118,18 @@ public class ArrangeAct extends BaseAct {
 												arrageItems.add(arrayList
 														.get(i));
 											}
+											adapter.notifyDataSetChanged();
 										}
-										adapter.notifyDataSetChanged();
-										listView.onRefreshComplete();
+										handler.postDelayed(new Runnable() {
+
+											@Override
+											public void run() {
+												// TODO Auto-generated method
+												// stub
+												listView.onRefreshComplete();
+											}
+										}, 200);
+
 									}
 								});
 
@@ -128,7 +140,7 @@ public class ArrangeAct extends BaseAct {
 
 	}
 
-	class RecordItemAdapter extends BaseAdapter {
+	class ArrangeItemAdapter extends BaseAdapter {
 
 		@Override
 		public int getCount() {

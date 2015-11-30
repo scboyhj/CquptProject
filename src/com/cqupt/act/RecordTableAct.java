@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.cqupt.customview.CustomViewUtils;
+import com.cqupt.customview.CustomViewUtils.DialogCancelDealListener;
 import com.cqupt.entity.ClassListenTable;
 import com.cqupt.http.HttpConnectUtils;
 import com.cqupt.setting.HttpSettings.REQUST_TYPE;
@@ -81,12 +82,23 @@ public class RecordTableAct extends BaseAct {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.record_tablelay);
+		type = REQUST_TYPE.GET_RECORD_ITEM;
 		ViewUtils.inject(this);
 		itemId = getIntent().getStringExtra("recordId");
 		HashMap<String, String> maps = new HashMap<String, String>();
 		maps.put("item_id", itemId);
 
-		progressDialog = CustomViewUtils.showProgressDialog(RecordTableAct.this);
+		progressDialog = CustomViewUtils.showProgressDialog(
+				RecordTableAct.this, new DialogCancelDealListener() {
+
+					@Override
+					public void dealCancel() {
+						// TODO Auto-generated method stub
+						customApplication.httpConnectUtils
+								.cancelTaskByType(type);
+
+					}
+				});
 		progressDialog.show();
 		customApplication.httpConnectUtils.sendRequestByGet(
 				REQUST_TYPE.GET_RECORD_ITEM, maps,
@@ -95,10 +107,11 @@ public class RecordTableAct extends BaseAct {
 					@Override
 					public void setResponseResult(String resultString) {
 						// TODO Auto-generated method stub
-
+						progressDialog.cancel();
 						if (resultString == null || resultString.length() == 0) {
-							CustomViewUtils.showInToast(customApplication,
-									"∂¡»° ß∞‹");
+							sendMsgShowInToastDelay("∂¡»° ß∞‹");
+						} else if (resultString.equals("error")) {
+							sendMsgShowInToastDelay("Õ¯¬Á“Ï≥££¨«Î…‘∫Û‘Ÿ ‘");
 						} else {
 							Gson gson = new Gson();
 							Log.i("RecordTableAct", resultString);
@@ -107,7 +120,6 @@ public class RecordTableAct extends BaseAct {
 							loadDateToView(classListenTable);
 
 						}
-						progressDialog.cancel();
 
 					}
 				});

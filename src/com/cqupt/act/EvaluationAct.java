@@ -8,6 +8,8 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +27,8 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.cqupt.customview.CustomViewUtils;
+import com.cqupt.customview.CustomViewUtils.DialogCancelDealListener;
+import com.cqupt.entity.ClassListenTable;
 import com.cqupt.frag.AdviceInClassFrag;
 import com.cqupt.frag.BaseFrag;
 import com.cqupt.frag.BasicInfoFrag;
@@ -32,7 +36,9 @@ import com.cqupt.frag.EvaluationcContentFrag;
 import com.cqupt.frag.RecordInClassFrag;
 import com.cqupt.http.HttpConnectUtils.HttpListener;
 import com.cqupt.setting.HttpSettings.REQUST_TYPE;
+import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.exception.DbException;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -56,11 +62,17 @@ public class EvaluationAct extends BaseAct {
 	private int currentPageIndex = 0;
 	private View buttomMoveView;
 
+	SharedPreferences preferences;
+
+	private DbUtils dbUtils;
+
 	ProgressDialog progressDialog;
 
-	public interface CollectDataInViewListener {
+	public interface CollectOrBackDataInViewListener {
 
 		public String collectDataInView();
+
+		public void backDataInView();
 	}
 
 	@Override
@@ -68,7 +80,7 @@ public class EvaluationAct extends BaseAct {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.evaluationlay);
-
+		type = REQUST_TYPE.SEND_TABLE;
 		ViewUtils.inject(this);
 
 		int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
@@ -98,6 +110,37 @@ public class EvaluationAct extends BaseAct {
 		initRadioGroup();
 		initFragments();
 		initFragmentPagerAdapter(getSupportFragmentManager());
+
+		dbUtils = customApplication.dbUtils;
+		preferences = customApplication.preferences_table;
+
+		Log.i("pf", "in create:" + preferences.getBoolean("load_back", false)
+				+ "");
+
+		loadBackDataToView(preferences.getBoolean("load_back", false));
+
+	}
+
+	private void loadBackDataToView(boolean isload) {
+		// TODO Auto-generated method stub
+		if (isload) {
+			try {
+				ClassListenTable classListenTable = dbUtils
+						.findFirst(ClassListenTable.class);
+				BaseFrag.classListenTable = classListenTable;
+				BaseFrag.should_To_Back = true;
+				// for (int i = 0; i < fragments.size(); i++) {
+				// CollectOrBackDataInViewListener listener =
+				// (CollectOrBackDataInViewListener) fragments
+				// .get(i);
+				// listener.backDataInView();
+				// }
+
+			} catch (DbException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@OnClick(R.id.bt_send_data)
@@ -126,7 +169,19 @@ public class EvaluationAct extends BaseAct {
 				return;
 			}
 		}
-		progressDialog = CustomViewUtils.showProgressDialog(EvaluationAct.this);
+		progressDialog = CustomViewUtils.showProgressDialog(EvaluationAct.this,
+				new DialogCancelDealListener() {
+
+					@Override
+					public void dealCancel() {
+						// TODO Auto-generated method stub
+
+						// TODO Auto-generated method stub
+						customApplication.httpConnectUtils
+								.cancelTaskByType(type);
+
+					}
+				});
 		progressDialog.show();
 		if (isComplement) {
 			CustomViewUtils.showInToast(customApplication, "正在上传...");
@@ -149,22 +204,55 @@ public class EvaluationAct extends BaseAct {
 					@Override
 					public void setResponseResult(String resultString) {
 						// TODO Auto-generated method stub
+						progressDialog.cancel();
 						if (resultString.equals("ok")) {
 							CustomViewUtils.showInToast(customApplication,
 									"上传成功！O(∩_∩)O哈哈~");
+							Editor editor = preferences.edit();
+							editor.putBoolean("load_back", false);
+							editor.commit();
+							BaseFrag.should_To_Back = false;
 
+							try {
+								dbUtils.deleteAll(ClassListenTable.class);
+							} catch (DbException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							EvaluationAct.this.finish();
 
 						} else if (resultString.equals("no")) {
-							CustomViewUtils.showInToast(customApplication,
-									resultString);
+							sendMsgShowInToastDelay("服务器拒绝请求！");
+							saveDataInDB();
+						} else if (resultString.equals("error")) {
+							sendMsgShowInToastDelay("网络异常，请稍后再试");
+							saveDataInDB();
 						} else {
-							CustomViewUtils.showInToast(customApplication,
-									resultString);
+							sendMsgShowInToastDelay("未知错误！");
+							saveDataInDB();
 						}
-						progressDialog.cancel();
+
 					}
 				}, nameValuePairs);
+
+	}
+
+	public void saveDataInDB() {
+		ClassListenTable listenTable = BaseFrag.classListenTable;
+
+		try {
+
+			dbUtils.deleteAll(ClassListenTable.class);
+			dbUtils.save(listenTable);
+
+			Editor editor = preferences.edit();
+			editor.putBoolean("load_back", true);
+			editor.commit();
+
+		} catch (DbException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

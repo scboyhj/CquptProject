@@ -39,6 +39,7 @@ public class NewsRecordAct extends BaseAct {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recordlay);
+		type=REQUST_TYPE.GET_NOTIFY_ITEMS;
 		ViewUtils.inject(this);
 		listView = (PullToRefreshListView) findViewById(R.id.pull_to_refresh_mlistview);
 		handler = new Handler();
@@ -89,17 +90,15 @@ public class NewsRecordAct extends BaseAct {
 										// TODO Auto-generated method stub
 										if (resultString == null
 												|| resultString.length() == 0) {
-											CustomViewUtils.showInToast(
-													customApplication, "未知错误！"
-															+ resultString);
 
+											sendMsgShowInToastDelay("未知错误！");
 										} else if (resultString.equals("no")) {
-											CustomViewUtils
-													.showInToast(
-															customApplication,
-															"没有了更多了");
+
+											sendMsgShowInToastDelay("没有了更多了");
 											currentPage--;
 
+										} else if (resultString.equals("error")) {
+											sendMsgShowInToastDelay("网络异常，请稍后再试");
 										} else {
 											Log.i("NewsRecordAct", resultString);
 											Type type = new TypeToken<ArrayList<NotifyItem>>() {
@@ -114,9 +113,19 @@ public class NewsRecordAct extends BaseAct {
 												notifyItems.add(arrayList
 														.get(i));
 											}
+											adapter.notifyDataSetChanged();
 										}
-										adapter.notifyDataSetChanged();
-										listView.onRefreshComplete();
+
+										handler.postDelayed(new Runnable() {
+
+											@Override
+											public void run() {
+												// TODO Auto-generated method
+												// stub
+												listView.onRefreshComplete();
+											}
+										}, 200);
+
 									}
 								});
 
@@ -124,19 +133,6 @@ public class NewsRecordAct extends BaseAct {
 				}, 300);
 			}
 		});
-		// listView.setOnItemClickListener(new OnItemClickListener() {
-		//
-		// @Override
-		// public void onItemClick(AdapterView<?> parent, View view,
-		// int position, long id) {
-		// // TODO Auto-generated method stub
-		//
-		// Intent intent = new Intent(NewsRecordAct.this,
-		// NewsDetailAct.class);
-		// intent.putExtra("url", recordItems.get(position-1).newsUrl);
-		// startActivity(intent);
-		// }
-		// });
 	}
 
 	class RecordItemAdapter extends BaseAdapter {
